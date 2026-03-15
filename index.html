@@ -268,6 +268,9 @@
         top: 67%;
         font-size: 18px;
       }
+      .btn-share {
+  background: #2d6cdf;
+}
     }
   </style>
 </head>
@@ -318,6 +321,7 @@
         <div class="actions">
           <button class="btn btn-png" id="downloadPng">Download PNG</button>
           <button class="btn btn-jpg" id="downloadJpg">Download JPG</button>
+          <button class="btn btn-share" id="shareCard">Share</button>
         </div>
       </div>
     </div>
@@ -366,6 +370,38 @@
     document.getElementById("downloadJpg").addEventListener("click", () => downloadCard("jpg"));
 
     updateCard();
+document.getElementById("shareCard").addEventListener("click", async () => {
+
+  if (!navigator.share) {
+    alert("Sharing is supported on mobile devices.");
+    return;
+  }
+
+  const canvas = await html2canvas(captureArea, {
+    useCORS: true,
+    scale: 3
+  });
+
+  canvas.toBlob(async (blob) => {
+
+    const file = new File([blob], "NextPower_Eid_Card.png", {
+      type: "image/png"
+    });
+
+    try {
+      await navigator.share({
+        title: "Eid Mubarak - NextPower Arabia",
+        text: "Wishing you a blessed Eid from NextPower Arabia.",
+        files: [file]
+      });
+    } catch (error) {
+      console.log("Share cancelled");
+    }
+
+  });
+
+});
+    
   </script>
 </body>
 </html>
