@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>NextPower Eid Greeting Generator</title>
+
+<style>
+body{
+font-family: Arial, sans-serif;
+text-align:center;
+background:#f4f4f4;
+padding:20px;
+}
+
+.container{
+max-width:600px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input{
+padding:10px;
+margin:10px;
+width:80%;
+font-size:16px;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+background:#0a7c5f;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.preview{
+position:relative;
+margin-top:20px;
+}
+
+.preview img{
+width:100%;
+}
+
+.name{
+position:absolute;
+bottom:80px;
+left:0;
+right:0;
+font-size:28px;
+font-weight:bold;
+color:white;
+}
+
+.title{
+position:absolute;
+bottom:50px;
+left:0;
+right:0;
+font-size:18px;
+color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>NextPower Eid Greeting</h2>
+<p>Enter your name and title then download your personalized greeting.</p>
+
+<input id="name" placeholder="Enter your name">
+
+<br>
+
+<input id="title" placeholder="Enter your job title">
+
+<br>
+
+<button onclick="updateText()">Preview</button>
+
+<div class="preview">
+
+<img src="eid-design.jpg" id="design">
+
+<div class="name" id="nameText"></div>
+<div class="title" id="titleText"></div>
+
+</div>
+
+</div>
+
+<script>
+
+function updateText(){
+document.getElementById("nameText").innerText =
+document.getElementById("name").value;
+
+document.getElementById("titleText").innerText =
+document.getElementById("title").value;
+}
+
+</script>
+
+</body>
+</html>
