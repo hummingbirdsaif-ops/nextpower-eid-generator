@@ -210,6 +210,11 @@
       background: #c8a227;
     }
 
+    .btn-share {
+      background: #2d6cdf;
+      display: none;
+    }
+
     @media (max-width: 980px) {
       .layout {
         grid-template-columns: 1fr;
@@ -261,16 +266,17 @@
 
       .overlay-name {
         top: 60%;
-        font-size: 24px;
+        font-size: 18px;
       }
 
       .overlay-title {
-        top: 67%;
-        font-size: 18px;
+        top: 64%;
+        font-size: 14px;
       }
+
       .btn-share {
-  background: #2d6cdf;
-}
+        display: block;
+      }
     }
   </style>
 </head>
@@ -369,39 +375,40 @@
     document.getElementById("downloadPng").addEventListener("click", () => downloadCard("png"));
     document.getElementById("downloadJpg").addEventListener("click", () => downloadCard("jpg"));
 
-    updateCard();
-document.getElementById("shareCard").addEventListener("click", async () => {
+    document.getElementById("shareCard").addEventListener("click", async () => {
+      if (!navigator.share) {
+        alert("Sharing is supported on mobile devices only.");
+        return;
+      }
 
-  if (!navigator.share) {
-    alert("Sharing is supported on mobile devices.");
-    return;
-  }
+      const canvas = await html2canvas(captureArea, {
+        useCORS: true,
+        scale: 3
+      });
 
-  const canvas = await html2canvas(captureArea, {
-    useCORS: true,
-    scale: 3
-  });
+      canvas.toBlob(async (blob) => {
+        if (!blob) {
+          alert("Unable to generate image for sharing.");
+          return;
+        }
 
-  canvas.toBlob(async (blob) => {
+        const file = new File([blob], "NextPower_Eid_Card.png", {
+          type: "image/png"
+        });
 
-    const file = new File([blob], "NextPower_Eid_Card.png", {
-      type: "image/png"
+        try {
+          await navigator.share({
+            title: "Eid Mubarak - NextPower Arabia",
+            text: "Wishing you a blessed Eid from NextPower Arabia.",
+            files: [file]
+          });
+        } catch (error) {
+          console.log("Share cancelled");
+        }
+      }, "image/png");
     });
 
-    try {
-      await navigator.share({
-        title: "Eid Mubarak - NextPower Arabia",
-        text: "Wishing you a blessed Eid from NextPower Arabia.",
-        files: [file]
-      });
-    } catch (error) {
-      console.log("Share cancelled");
-    }
-
-  });
-
-});
-    
+    updateCard();
   </script>
 </body>
 </html>
