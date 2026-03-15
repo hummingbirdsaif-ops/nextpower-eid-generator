@@ -343,11 +343,11 @@
     async function downloadCard(type) {
       const canvas = await html2canvas(captureArea, {
         useCORS: true,
-        scale: 3
+        scale: 4
       });
 
       const link = document.createElement("a");
-      const safeName = (nameInput.value.trim() || "NextPower").replace(/\s+/g, "_");
+      const safeName = nameInput.value.trim().replace(/\s+/g, "_");
 
       if (type === "jpg") {
         link.download = safeName + "_Eid_Greeting.jpg";
