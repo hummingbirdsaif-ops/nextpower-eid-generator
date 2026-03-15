@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>NextPower Eid Generator</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f4f6fa;
+text-align:center;
+padding:40px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+input{
+width:300px;
+padding:10px;
+margin:10px;
+font-size:16px;
+}
+
+.preview{
+position:relative;
+display:inline-block;
+}
+
+.preview img{
+width:400px;
+}
+
+.name{
+position:absolute;
+top:60%;
+left:30%;
+color:white;
+font-size:30px;
+font-weight:bold;
+}
+
+.title{
+position:absolute;
+top:68%;
+left:30%;
+color:white;
+font-size:20px;
+}
+
+button{
+padding:12px 20px;
+font-size:16px;
+margin-top:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Create Your Personalized Card</h1>
+
+<input id="name" placeholder="Your Name">
+<br>
+<input id="title" placeholder="Your Position">
+
+<div class="preview">
+
+<img src="eid-design.jpg">
+
+<div class="name" id="nameText"></div>
+<div class="title" id="titleText"></div>
+
+</div>
+
+<br>
+
+<button onclick="updateCard()">Preview</button>
+
+<script>
+
+function updateCard(){
+
+document.getElementById("nameText").innerText =
+document.getElementById("name").value;
+
+document.getElementById("titleText").innerText =
+document.getElementById("title").value;
+
+}
+
+</script>
+
+</body>
+</html>
