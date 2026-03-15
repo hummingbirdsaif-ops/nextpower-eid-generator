@@ -1,274 +1,368 @@
-<style>
-  @font-face {
-    font-family: 'GothamBold';
-    src: url('Gotham-Bold.woff2') format('woff2'),
-         url('Gotham-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NextPower Eid Greeting Generator</title>
 
-  @font-face {
-    font-family: 'GothamLight';
-    src: url('Gotham-Light.woff2') format('woff2'),
-         url('Gotham-Light.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f3f5f9;
-    color: #1f2a44;
-  }
-
-  .page {
-    min-height: 100vh;
-    padding: 40px 20px;
-  }
-
-  .header {
-    max-width: 1200px;
-    margin: 0 auto 30px;
-  }
-
-  .header-top {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 18px;
-  }
-
-  .header-logo {
-    height: 44px;
-    width: auto;
-    display: block;
-  }
-
-  .header-text {
-    text-align: center;
-    width: 100%;
-  }
-
-  .header h1 {
-    margin: 0 0 10px;
-    font-size: 42px;
-    line-height: 1.1;
-    color: #1e3a6d;
-  }
-
-  .header p {
-    margin: 0;
-    font-size: 18px;
-    color: #5f6b85;
-  }
-
-  .layout {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 420px 1fr;
-    gap: 28px;
-    align-items: start;
-  }
-
-  .panel,
-  .preview-panel {
-    background: #ffffff;
-    border-radius: 22px;
-    padding: 28px;
-    box-shadow: 0 10px 30px rgba(19, 34, 68, 0.08);
-  }
-
-  .panel h2,
-  .preview-panel h2 {
-    margin: 0 0 22px;
-    font-size: 24px;
-    color: #1f2a44;
-  }
-
-  .field {
-    margin-bottom: 18px;
-  }
-
-  .field label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 15px;
-    font-weight: 700;
-    color: #4a5772;
-  }
-
-  .field input {
-    width: 100%;
-    height: 52px;
-    border: 1px solid #d9dfeb;
-    border-radius: 14px;
-    padding: 0 16px;
-    font-size: 16px;
-    outline: none;
-    transition: 0.2s ease;
-  }
-
-  .field input:focus {
-    border-color: #1e3a6d;
-    box-shadow: 0 0 0 3px rgba(30, 58, 109, 0.08);
-  }
-
-  .tip {
-    margin-top: 10px;
-    padding: 16px 18px;
-    border-radius: 14px;
-    background: #f7f8fb;
-    color: #5f6b85;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .preview-frame {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .card-wrap {
-    width: 100%;
-    max-width: 540px;
-  }
-
-  .card {
-    position: relative;
-    width: 100%;
-    overflow: visible;
-    background: transparent;
-  }
-
-  .card img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-  }
-
-  .overlay-name,
-  .overlay-title {
-    position: absolute;
-    left: 26%;
-    width: 52%;
-    text-align: left;
-    color: #ffffff;
-    z-index: 2;
-    word-break: break-word;
-  }
-
-  .overlay-name {
-    top: 58%;
-    font-family: 'GothamBold', Arial, sans-serif;
-    font-size: 33.7px;
-    font-weight: 700;
-    line-height: 1.08;
-    -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.95);
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
-  }
-
-  .overlay-title {
-    top: 66%;
-    font-family: 'GothamLight', Arial, sans-serif;
-    font-size: 24.07px;
-    font-weight: 300;
-    line-height: 1.2;
-    -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.95);
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.10);
-    letter-spacing: 0.2px;
-  }
-
-  .actions {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    flex: 1;
-    min-width: 180px;
-    height: 52px;
-    border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    color: #fff;
-  }
-
-  .btn-png {
-    background: #1e3a6d;
-  }
-
-  .btn-jpg {
-    background: #c8a227;
-  }
-
-  @media (max-width: 980px) {
-    .layout {
-      grid-template-columns: 1fr;
+  <style>
+    @font-face {
+      font-family: 'GothamBold';
+      src: url('Gotham-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
     }
 
-    .header h1 {
-      font-size: 34px;
+    @font-face {
+      font-family: 'GothamLight';
+      src: url('Gotham-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
     }
-  }
 
-  @media (max-width: 640px) {
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f5f9;
+      color: #1f2a44;
+    }
+
     .page {
-      padding: 20px 14px;
+      min-height: 100vh;
+      padding: 40px 20px;
     }
 
-    .panel,
-    .preview-panel {
-      padding: 18px;
-      border-radius: 18px;
+    .header {
+      max-width: 1200px;
+      margin: 0 auto 30px;
     }
 
     .header-top {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
     }
 
     .header-logo {
-      height: 36px;
+      height: 44px;
+      width: auto;
+      display: block;
     }
 
     .header-text {
       text-align: center;
+      width: 100%;
     }
 
     .header h1 {
-      font-size: 28px;
+      margin: 0 0 10px;
+      font-size: 42px;
+      line-height: 1.1;
+      color: #1e3a6d;
     }
 
     .header p {
+      margin: 0;
+      font-size: 18px;
+      color: #5f6b85;
+    }
+
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .panel,
+    .preview-panel {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(19, 34, 68, 0.08);
+    }
+
+    .panel h2,
+    .preview-panel h2 {
+      margin: 0 0 22px;
+      font-size: 24px;
+      color: #1f2a44;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
       font-size: 15px;
+      font-weight: 700;
+      color: #4a5772;
+    }
+
+    .field input {
+      width: 100%;
+      height: 52px;
+      border: 1px solid #d9dfeb;
+      border-radius: 14px;
+      padding: 0 16px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .tip {
+      margin-top: 10px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: #f7f8fb;
+      color: #5f6b85;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .preview-frame {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .card-wrap {
+      width: 100%;
+      max-width: 540px;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      background: transparent;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .overlay-name,
     .overlay-title {
+      position: absolute;
       left: 26%;
-      width: 54%;
+      width: 52%;
+      text-align: left;
+      color: #ffffff;
+      z-index: 2;
+      word-break: break-word;
     }
 
     .overlay-name {
-      top: 58%;
-      font-size: 24px;
+      top: 60%;
+      font-family: 'GothamBold', Arial, sans-serif;
+      font-size: 33.7px;
+      font-weight: 700;
+      line-height: 1.08;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
     }
 
     .overlay-title {
-      top: 66%;
-      font-size: 18px;
+      top: 67%;
+      font-family: 'GothamLight', Arial, sans-serif;
+      font-size: 24.07px;
+      font-weight: 300;
+      line-height: 1.2;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+      letter-spacing: 0.2px;
     }
-  }
-</style>
+
+    .actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      flex: 1;
+      min-width: 180px;
+      height: 52px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .btn-png {
+      background: #1e3a6d;
+    }
+
+    .btn-jpg {
+      background: #c8a227;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .header h1 {
+        font-size: 34px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 20px 14px;
+      }
+
+      .panel,
+      .preview-panel {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .header-logo {
+        height: 36px;
+      }
+
+      .header-text {
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 28px;
+      }
+
+      .header p {
+        font-size: 15px;
+      }
+
+      .overlay-name,
+      .overlay-title {
+        left: 26%;
+        width: 54%;
+      }
+
+      .overlay-name {
+        top: 60%;
+        font-size: 24px;
+      }
+
+      .overlay-title {
+        top: 67%;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="header-top">
+        <img src="nextpower-logo.png" alt="NextPower Arabia Logo" class="header-logo" />
+        <div class="header-text">
+          <h1>Create Your Personalized Card</h1>
+          <p>Enter your details below and download your custom greeting card in high resolution</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="panel">
+        <h2>Your Details</h2>
+
+        <div class="field">
+          <label for="name">Your Name</label>
+          <input id="name" type="text" placeholder="Enter your name" />
+        </div>
+
+        <div class="field">
+          <label for="title">Your Position</label>
+          <input id="title" type="text" placeholder="Enter your job title" />
+        </div>
+
+        <div class="tip">
+          Tip: Your name and position will appear on the card automatically while typing.
+        </div>
+      </div>
+
+      <div class="preview-panel">
+        <h2>Live Preview</h2>
+
+        <div class="preview-frame">
+          <div class="card-wrap">
+            <div class="card" id="captureArea">
+              <img src="eid-design.jpg" id="design" alt="Eid Design" />
+              <div class="overlay-name" id="nameText">Your Name</div>
+              <div class="overlay-title" id="titleText">Your Position</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-png" id="downloadPng">Download PNG</button>
+          <button class="btn btn-jpg" id="downloadJpg">Download JPG</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    const nameInput = document.getElementById("name");
+    const titleInput = document.getElementById("title");
+    const nameText = document.getElementById("nameText");
+    const titleText = document.getElementById("titleText");
+    const captureArea = document.getElementById("captureArea");
+
+    function updateCard() {
+      const nameValue = nameInput.value.trim();
+      const titleValue = titleInput.value.trim();
+
+      nameText.textContent = nameValue || "Your Name";
+      titleText.textContent = titleValue || "Your Position";
+    }
+
+    nameInput.addEventListener("input", updateCard);
+    titleInput.addEventListener("input", updateCard);
+
+    async function downloadCard(type) {
+      const canvas = await html2canvas(captureArea, {
+        useCORS: true,
+        scale: 3
+      });
+
+      const link = document.createElement("a");
+      const safeName = (nameInput.value.trim() || "NextPower").replace(/\s+/g, "_");
+
+      if (type === "jpg") {
+        link.download = safeName + "_Eid_Greeting.jpg";
+        link.href = canvas.toDataURL("image/jpeg", 0.95);
+      } else {
+        link.download = safeName + "_Eid_Greeting.png";
+        link.href = canvas.toDataURL("image/png");
+      }
+
+      link.click();
+    }
+
+    document.getElementById("downloadPng").addEventListener("click", () => downloadCard("png"));
+    document.getElementById("downloadJpg").addEventListener("click", () => downloadCard("jpg"));
+
+    updateCard();
+  </script>
+</body>
+</html>
