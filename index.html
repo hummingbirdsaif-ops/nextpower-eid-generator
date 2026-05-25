@@ -395,62 +395,172 @@ function updateCard() {
     nameInput.addEventListener("input", updateCard);
     titleInput.addEventListener("input", updateCard);
 
-    async function downloadCard(type) {
-      const canvas = await html2canvas(captureArea, {
-        useCORS: true,
-        scale: 3
-      });
+    function hasArabic(text) {
 
-      const link = document.createElement("a");
-      const safeName = (nameInput.value.trim() || "NextPower").replace(/\s+/g, "_");
+  return /[\u0600-\u06FF]/.test(text);
 
-      if (type === "jpg") {
-        link.download = safeName + "_Eid_Greeting.jpg";
-        link.href = canvas.toDataURL("image/jpeg", 0.95);
-      } else {
-        link.download = safeName + "_Eid_Greeting.png";
-        link.href = canvas.toDataURL("image/png");
-      }
+}
 
-      link.click();
-    }
+async function createFinalCanvas() {
+
+  await document.fonts.ready;
+
+  const img = document.getElementById("design");
+
+  if (!img.complete) {
+
+    await new Promise(resolve => {
+
+      img.onload = resolve;
+
+    });
+
+  }
+
+  const canvas = document.createElement("canvas");
+
+  const ctx = canvas.getContext("2d");
+
+  const w = img.naturalWidth;
+
+  const h = img.naturalHeight;
+
+  canvas.width = w;
+
+  canvas.height = h;
+
+  ctx.drawImage(img, 0, 0, w, h);
+
+  const nameValue = nameInput.value.trim() || "Your Name";
+
+  const titleValue = titleInput.value.trim() || "Your Position";
+
+  const isArabicName = hasArabic(nameValue);
+
+  const isArabicTitle = hasArabic(titleValue);
+
+  // Change these numbers to move the text
+
+  const centerX = w * 0.50;
+
+  const nameY = h * 0.42;
+
+  const titleY = h * 0.47;
+
+  // Name style
+
+  ctx.fillStyle = "#000000";
+
+  ctx.textAlign = "center";
+
+  ctx.direction = isArabicName ? "rtl" : "ltr";
+
+  ctx.font = isArabicName
+
+    ? `700 ${Math.round(w * 0.035)}px "Noto Kufi Arabic", Arial, sans-serif`
+
+    : `700 ${Math.round(w * 0.035)}px Arial, sans-serif`;
+
+  ctx.fillText(nameValue, centerX, nameY);
+
+  // Title style
+
+  ctx.fillStyle = "#000000";
+
+  ctx.textAlign = "center";
+
+  ctx.direction = isArabicTitle ? "rtl" : "ltr";
+
+  ctx.font = isArabicTitle
+
+    ? `400 ${Math.round(w * 0.024)}px "Noto Kufi Arabic", Arial, sans-serif`
+
+    : `400 ${Math.round(w * 0.024)}px Arial, sans-serif`;
+
+  ctx.fillText(titleValue, centerX, titleY);
+
+  return canvas;
+
+}
+
+async function downloadCard(type) {
+
+  const canvas = await createFinalCanvas();
+
+  const link = document.createElement("a");
+
+  const safeName = (nameInput.value.trim() || "NextPower").replace(/\s+/g, "_");
+
+  if (type === "jpg") {
+
+    link.download = safeName + "_Eid_Greeting.jpg";
+
+    link.href = canvas.toDataURL("image/jpeg", 0.95);
+
+  } else {
+
+    link.download = safeName + "_Eid_Greeting.png";
+
+    link.href = canvas.toDataURL("image/png");
+
+  }
+
+  link.click();
+
+}
 
     document.getElementById("downloadPng").addEventListener("click", () => downloadCard("png"));
     document.getElementById("downloadJpg").addEventListener("click", () => downloadCard("jpg"));
 
-    document.getElementById("shareCard").addEventListener("click", async () => {
-      if (!navigator.share) {
-        alert("Sharing is supported on mobile devices only.");
-        return;
-      }
+   document.getElementById("shareCard").addEventListener("click", async () => {
 
-      const canvas = await html2canvas(captureArea, {
-        useCORS: true,
-        scale: 3
-      });
+  if (!navigator.share) {
 
-      canvas.toBlob(async (blob) => {
-        if (!blob) {
-          alert("Unable to generate image for sharing.");
-          return;
-        }
+    alert("Sharing is supported on mobile devices only.");
 
-        const file = new File([blob], "NextPower_Eid_Card.png", {
-          type: "image/png"
-        });
+    return;
 
-        try {
-          await navigator.share({
-            title: "Eid Mubarak - NextPower Arabia",
-            text: "Wishing you a blessed Eid from NextPower Arabia.",
-            files: [file]
-          });
-        } catch (error) {
-          console.log("Share cancelled");
-        }
-      }, "image/png");
+  }
+
+  const canvas = await createFinalCanvas();
+
+  canvas.toBlob(async (blob) => {
+
+    if (!blob) {
+
+      alert("Unable to generate image for sharing.");
+
+      return;
+
+    }
+
+    const file = new File([blob], "NextPower_Eid_Card.png", {
+
+      type: "image/png"
+
     });
 
+    try {
+
+      await navigator.share({
+
+        title: "Eid Mubarak - NextPower Arabia",
+
+        text: "Wishing you a blessed Eid from NextPower Arabia.",
+
+        files: [file]
+
+      });
+
+    } catch (error) {
+
+      console.log("Share cancelled");
+
+    }
+
+  }, "image/png");
+
+});
     updateCard();
   </script>
 </body>
